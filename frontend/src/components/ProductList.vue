@@ -1,53 +1,36 @@
 <template>
     <div>
-      <h1>Product List</h1>
+      <h2>Product List</h2>
       <ul>
-        <li v-for="product in products" :key="product.ProductID">
-          {{ product.ProductName }} - {{ product.Price }} - Stock: {{ product.Quantity }}
-          <button @click="addToCart(product)">Add to Cart</button>
+        <li v-for="product in products" :key="product.productId">
+          {{ product.productName }} - {{ product.price }} - Stock: {{ product.quantity }}
         </li>
       </ul>
-      <button @click="goToOrderSummary">Proceed to Order Summary</button>
     </div>
   </template>
   
   <script>
-  import axios from 'axios';
-  
   export default {
     data() {
       return {
-        products: [],
-        cart: []
+        products: []
       };
     },
     created() {
       this.fetchProducts();
     },
     methods: {
-      fetchProducts() {
-        axios.get('/api/products')
-          .then(response => {
-            this.products = response.data;
-          })
-          .catch(error => {
-            console.error("There was an error fetching the products!", error);
-          });
-      },
-      addToCart(product) {
-        const item = this.cart.find(i => i.productId === product.ProductID);
-        if (item) {
-          if (item.quantity < product.Quantity) {
-            item.quantity++;
+      async fetchProducts() {
+        try {
+          const response = await fetch('http://localhost:8081/api/products');
+          if (response.ok) {
+            this.products = await response.json();
           } else {
-            alert('Insufficient stock');
+            console.error('Error fetching products');
           }
-        } else {
-          this.cart.push({ productId: product.ProductID, quantity: 1, price: product.Price });
+        } catch (error) {
+          console.error('Error fetching products', error);
         }
-      },
-      goToOrderSummary() {
-        this.$router.push({ name: 'OrderSummary', params: { cart: this.cart } });
       }
     }
   };

@@ -1,23 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ProductList from '../components/ProductList.vue';
-import OrderSummary from '../components/OrderSummary.vue';
+import AddProduct from '../components/AddProduct.vue';
+import CreateOrder from '../components/CreateOrder.vue';
 
 const routes = [
-  {
-    path: '/',
-    name: 'ProductList',
-    component: ProductList
-  },
-  {
-    path: '/order-summary',
-    name: 'OrderSummary',
-    component: OrderSummary,
-    props: true
-  }
+  { path: '/products', component: ProductList },
+  { path: '/add-product', component: AddProduct },
+  { path: '/create-order', component: CreateOrder }
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 });
 

@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 public class Product {
     @Id
     @Column(name = "ProductID", length = 10)
-    private String id;
+    private String productId;
     
     @Column(name = "ProductName", length = 100)
-    private String name;
+    private String productName;
     
     @Column(name = "Price")
     private BigDecimal price;
@@ -19,20 +19,20 @@ public class Product {
     private Integer quantity;
 
     // Getters and Setters
-    public String getId() {
-        return id;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public BigDecimal getPrice() {

@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 public class OrderService {
+
     @Autowired
     private OrderRepository orderRepository;
 
@@ -26,16 +28,27 @@ public class OrderService {
 
     @Transactional
     public Order createOrder(Order order, List<OrderDetail> orderDetails) {
+        BigDecimal totalAmount = BigDecimal.ZERO;
+
         for (OrderDetail detail : orderDetails) {
             Product product = productRepository.findById(detail.getProductId()).orElseThrow();
             if (product.getQuantity() < detail.getQuantity()) {
-                throw new RuntimeException("Insufficient stock for product: " + product.getName());
+                throw new IllegalArgumentException("Insufficient stock for product: " + product.getProductName());
             }
             product.setQuantity(product.getQuantity() - detail.getQuantity());
             productRepository.save(product);
+
+            detail.setStandPrice(product.getPrice());
+            detail.setItemPrice(product.getPrice().multiply(new BigDecimal(detail.getQuantity())));
+            totalAmount = totalAmount.add(detail.getItemPrice());
+            detail.setOrder(order);
         }
+
+        order.setOrderDetails(orderDetails);
+        order.setPrice(totalAmount); // Correct method name based on Order class
         orderRepository.save(order);
         orderDetailRepository.saveAll(orderDetails);
+
         return order;
     }
 }

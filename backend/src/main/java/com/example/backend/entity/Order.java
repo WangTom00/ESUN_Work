@@ -2,30 +2,34 @@ package com.example.backend.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "[Order]")  // 使用雙引號括起來
 public class Order {
     @Id
     @Column(name = "OrderID", length = 20)
-    private String id;
-    
+    private String orderId;
+
     @Column(name = "MemberID")
     private Integer memberId;
-    
-    @Column(name = "Price")
-    private BigDecimal price;
-    
+
     @Column(name = "PayStatus")
     private Boolean payStatus;
 
+    @Column(name = "Price")
+    private BigDecimal price;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetails;
+
     // Getters and Setters
-    public String getId() {
-        return id;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public Integer getMemberId() {
@@ -36,6 +40,14 @@ public class Order {
         this.memberId = memberId;
     }
 
+    public Boolean getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(Boolean payStatus) {
+        this.payStatus = payStatus;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -44,11 +56,11 @@ public class Order {
         this.price = price;
     }
 
-    public Boolean getPayStatus() {
-        return payStatus;
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
     }
 
-    public void setPayStatus(Boolean payStatus) {
-        this.payStatus = payStatus;
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }

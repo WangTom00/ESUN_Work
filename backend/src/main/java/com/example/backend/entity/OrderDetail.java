@@ -10,8 +10,9 @@ public class OrderDetail {
     @Column(name = "OrderItemSN")
     private Long id;
     
-    @Column(name = "OrderID", length = 20)
-    private String orderId;
+    @ManyToOne
+    @JoinColumn(name = "OrderID", referencedColumnName = "OrderID")
+    private Order order;
     
     @Column(name = "ProductID", length = 10)
     private String productId;
@@ -34,12 +35,12 @@ public class OrderDetail {
         this.id = id;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public String getProductId() {
