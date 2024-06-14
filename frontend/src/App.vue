@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-    <h1>E-commerce Platform</h1>
-    <nav>
-      <router-link to="/products">Product List</router-link>
-      <router-link to="/add-product">Add Product</router-link>
-      <router-link to="/create-order">Create Order</router-link>
-    </nav>
-    <router-view></router-view>
+    <b-container>
+      <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar-brand href="#">E-commerce Platform</b-navbar-brand>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item to="/products" exact>Product List</b-nav-item>
+          <b-nav-item to="/add-product">Add Product</b-nav-item>
+          <b-nav-item to="/create-order">Create Order</b-nav-item>
+        </b-navbar-nav>
+      </b-navbar>
+      <b-container class="mt-4">
+        <router-view></router-view>
+      </b-container>
+    </b-container>
   </div>
 </template>
 

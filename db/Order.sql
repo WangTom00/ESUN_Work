@@ -11,4 +11,4 @@ INSERT INTO [Order] (OrderID, MemberID, Price, PayStatus) VALUES
 ('Ms20250805258200', 1713, 2400, 1);
 
 
-select * from Order
+	select * from [Order]
